@@ -1,9 +1,11 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
 
 entity MultiplicadorWallace is port( 
-	A,B: in std_logic_vector (3 downto 0);
-	Resultado: out std_logic_vector (7 downto 0));
+	A,B: in  unsigned(3 downto 0);
+	Resultado:  out unsigned(7 downto 0));
 end MultiplicadorWallace;
 
 architecture arch of MultiplicadorWallace is
@@ -20,8 +22,8 @@ architecture arch of MultiplicadorWallace is
 
 
 	signal pp00,pp01,pp02,pp03,pp10,pp11,pp12,pp13,pp20,pp21,pp22,pp23,pp30,pp31,pp32,pp33 : std_logic;
-	signal intermed00,intermed01,intermed02,intermed03,intermed04: std_logic;
-	signal carry00,carry01,carry02,carry03,carry04,carry05,carry06,carry,carry07 : std_logic;
+	signal intermed00,intermed01,intermed02,intermed03,intermed04, intermed05: std_logic;
+	signal carry00,carry01,carry02,carry03,carry04,carry05,carry06,carry,carry07, carry08, carry09, carry10 : std_logic;
 
 		begin
 
@@ -50,27 +52,24 @@ architecture arch of MultiplicadorWallace is
 			
 			--arvore de wallace
 			Resultado(0) <= pp00; -- Seguindo a árvore de Wallace, a primeira posição não tem com quem somar, portanto, vai direto para o resultado final
-			MS0: meio_somador port map(pp01, pp10, Resultado(1), carry00); --Seguindo o exemplo: soma de 0 com 0
+			MS0: meio_somador port map(pp01, pp10, Resultado(1), carry00);
 			SC0: somador_completo port map(pp02, pp11, pp20, intermed00, carry01);
 			SC1: somador_completo port map(pp03, pp12, pp21, intermed01, carry02);
 			MS1: meio_somador port map(pp13, pp22, intermed02, carry03); -- aqui fecha o primeiro trio de linhas, pp23 vai ser chamado no próximo já que não realiza nenhuma operação nessa etapa
 			
-			MS2: meio_somador port map(intermed00, carry01, Resultado(2), carry04);
-			SC2: somador_completo port map(intermed01, carry02, pp30,Resultado(3), carry05);
-			SC3: somador_completo port map(intermed02, carry03, pp31, intermed03, carry06);
-			MS3: meio_somador port map(pp23,pp32,intermed04,carry07); -- aqui fecha o segundo trio de linhas, pp33 vai ser chamado na última etapa
+			SC2: somador_completo port map(intermed00, carry00, pp30, Resultado(2), carry04);
+			SC3: somador_completo port map(intermed01, carry01, pp31,intermed03, carry05);
+			SC4: somador_completo port map(intermed02, carry02, pp32, intermed04, carry06);
+			SC5: somador_completo port map(pp23, carry03, pp33, intermed05,carry07); -- aqui fecha a segunda etapa fazendo a soma com a linha pp33...pp30.
 			
-			--deve estar faltando a última etapa com os carrys
-			--MS4: meio_somador port map(intermed03,carry)
+			MS2: meio_somador port map(intermed03, carry04, Resultado(3), carry08);
+			SC6: somador_completo port map(intermed04, carry05, carry08, Resultado(4), carry09);
+			SC7: somador_completo port map(intermed05, carry06, carry09, Resultado(5), carry10);
+			MS3: meio_somador port map(carry07, carry10, Resultado(6), Resultado(7)); -- aqui fecha a ultima etapa.
+			
+			
+			--tem alguma coisa estranha acontecendo quando usamos valores maior ou iguais a "1000" em A ou B.
+			
 		
 end arch;
-	
-									
-								
-	
-	
-	
-	
-	
-	
-
+					
