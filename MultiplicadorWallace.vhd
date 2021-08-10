@@ -23,7 +23,7 @@ architecture arch of MultiplicadorWallace is
 
 	signal pp00,pp01,pp02,pp03,pp10,pp11,pp12,pp13,pp20,pp21,pp22,pp23,pp30,pp31,pp32,pp33 : std_logic;
 	signal intermed00,intermed01,intermed02,intermed03,intermed04, intermed05, intermed06, intermed07, intermed08, intermed09, intermed10: std_logic;
-	signal carry00,carry01,carry02,carry03,carry04,carry05,carry06,carry,carry07, carry08, carry09, carry10, carry11, carry12,carry13,carry14 : std_logic;
+	signal carry00,carry01,carry02,carry03,carry04,carry05,carry06,carry,carry07, carry08, carry09, carry10, carry11, carry12,carry13,carry14,carry15 : std_logic;
 
 		begin
 
@@ -69,13 +69,11 @@ architecture arch of MultiplicadorWallace is
 			
 			MS7: meio_somador port map(intermed06,carry08,Resultado(4),carry12);
 			MS8: meio_somador port map(intermed07,carry09,intermed09,carry13);
-			MS9: meio_somador port map(intermed08,carry10,Resultado(6),carry14);
+			MS9: meio_somador port map(intermed08,carry10,intermed10,carry14);
 			
 			MS10: meio_somador port map(intermed09,carry12,Resultado(5),open);
-			MS11: meio_somador port map(carry11, carry14, Resultado(7), open);
+			MS11: meio_somador port map(intermed10,carry13,Resultado(6),carry15);
+			SC5: somador_completo port map(carry11, carry14, carry15, Resultado(7), open);
 			
 		
 end arch;
-	
-									
-
