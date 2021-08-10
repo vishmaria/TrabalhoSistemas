@@ -61,34 +61,21 @@ architecture arch of MultiplicadorWallace is
 			SC2: somador_completo port map(intermed01,carry01,pp30, intermed03, carry05);
 			SC3: somador_completo port map(intermed02, carry02,pp31, intermed04, carry06);
 			SC4: somador_completo port map(pp23,carry03,pp32,intermed05, carry07);
-			
-			
-			
+				
 			MS3: meio_somador port map(intermed03,carry04,Resultado(3),carry08);
 			MS4: meio_somador port map(intermed04,carry05,intermed06,carry09);
 			MS5: meio_somador port map(intermed05,carry06,intermed07,carry10);
 			MS6: meio_somador port map(pp33,carry07,intermed08,carry11);
 			
-			--se houver erro, provavelmente é daqui pra baixo
-			
 			MS7: meio_somador port map(intermed06,carry08,Resultado(4),carry12);
-			MS8: meio_somador port map(intermed07,carry09,Resultado(5),carry13);
-			MS9: meio_somador port map(intermed08,carry10,Resultado(6),Resultado(7));
+			MS8: meio_somador port map(intermed07,carry09,intermed09,carry13);
+			MS9: meio_somador port map(intermed08,carry10,Resultado(6),carry14);
 			
+			MS10: meio_somador port map(intermed09,carry12,Resultado(5),open);
+			MS11: meio_somador port map(carry11, carry14, Resultado(7), open);
 			
-			
-			--Algum problema com o último passo, suspeito que sejam os carry's
 		
 end arch;
 	
 									
-								
-	
-	
-	
-	
-	
-	
 
-
-					
