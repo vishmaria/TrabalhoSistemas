@@ -4,8 +4,8 @@ use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
 
 entity MultiplicadorWallace is port( 
-	A,B: in  unsigned(3 downto 0);
-	Resultado:  out unsigned(7 downto 0));
+	A,B: in  std_logic_vector(3 downto 0);
+	Resultado:  out std_logic_vector(7 downto 0));
 end MultiplicadorWallace;
 
 architecture arch of MultiplicadorWallace is
