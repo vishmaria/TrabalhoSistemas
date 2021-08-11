@@ -1,6 +1,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.std_logic_unsigned.all;
+USE ieee.numeric_std.all;
 
 ENTITY bc IS
 PORT (reset, clk, inicio: in std_logic;
@@ -10,17 +11,23 @@ PORT (reset, clk, inicio: in std_logic;
 end bc;
 
 architecture bhv of bc is
-    type state_type is (S0, S1, S2, S3, S4, S5);
-    signal state, next_state: state_type;
+    type STATES is (S0, S1, S2, S3, S4, S5);
+    signal state_n, next_state: STATES;
 
 begin
 
-    process (clk, reset)
+    P1: process (clk, reset)
     begin 
         if(reset='1') then
-            state <= SO;
-        elsif (clock'event and clock= '1') then
-            case state is
+            state_n<= S0;
+        elsif (clk'event and clk= '1') then
+				state_n <= next_state;
+		  end if;
+	end process;
+	
+	P2: process(state_n, Az, Bz, inicio)
+	begin
+            case state_n is
                 when S0 =>
                     pronto <= '0';
                     ini <= '0'; 
@@ -49,7 +56,7 @@ begin
                     CP <= '0'; 
                    if Az ='0' and Bz='0' then
                         next_state <= S3;
-                    elsif Az='1' or Bz='1'
+                    elsif Az='1' or Bz='1' then
                         next_state <= S5;
                     else
                         next_state <= S2;
@@ -79,7 +86,7 @@ begin
                     CP <= '1'; 
                     next_state <= S0;
             end case;
-    end process;
+	end process;
 end bhv;
 
 
