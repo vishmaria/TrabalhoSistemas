@@ -9,15 +9,15 @@ end WallaceTree_tb;
 
 architecture tb of WallaceTree_tb is
     constant clk_period: time := 100 ns;
-    signal clk, rst : std_logic;
-    signal A, B: std_logic_vector(3 downto 0);
+    signal clk, rst, N, Z : std_logic;
+    signal A, B, C: std_logic_vector(3 downto 0);
     signal S: std_logic_vector(7 downto 0);
 begin
     -- conectando os sinais do test bench aos sinais do contador
-    UUT : entity work.MultiplicadorWallace port map 
-                (clock => clk, R => rst,
-                A => A, B => B, prod => S);
-					 
+    UUT : entity work.datapath port map 
+                (clk => clk, operacao => C, N => N, 
+					 Z => Z, A => A, B => B, SAIDA => S);
+
     rst <= '0', '1' after clk_period/20;
      
 	 -- processo gerador de clock
