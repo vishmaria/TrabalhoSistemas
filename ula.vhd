@@ -4,60 +4,55 @@ USE ieee.numeric_std.all;
 USE ieee.std_logic_unsigned.all;
 
 ENTITY ula IS 
-PORT ( A, B : IN std_LOGIC_VECTOR (3 DOWNTO 0);
-        ULAop: IN STD_LOGIC_VECTOR(3 downto 0);
+PORT (  CLK: in std_logic;
+		  A, B : IN std_LOGIC_VECTOR (7 DOWNTO 0);
+        ULAop: IN STD_LOGIC_VECTOR(7 downto 0);
         S: OUT std_LOGIC_VECTOR(7 DOWNTO 0);
-        N, Z, sem_operacao: OUT STD_LOGIC
+        Z, HALT, READY: OUT STD_LOGIC
         );
 END ula;
 
 ARCHITECTURE behaviour OF ula IS
 
-component somadorsubtrator IS
-PORT (a, b : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-      op: IN STD_LOGIC;
-      s : OUT STD_LOGIC_VECTOR(7 DOWNTO 0));
-END component;
-
-component MultiplicadorWallace is port( 
-	A,B: in  std_LOGIC_VECTOR(3 downto 0);
-	Resultado:  out std_LOGIC_VECTOR(7 downto 0));
+component Divisor is port ( 
+  CLK: in std_logic;
+  N,D : in std_logic_vector(7 downto 0);
+  Resultado: out std_logic_vector(7 downto 0);
+  Ready: out std_logic
+  );
 end component;
 
-signal A_auxiliar, B_auxiliar: std_LOGIC_VECTOR(4 downto 0); 
+signal div_ready, others_ready: std_logic;
 signal Stest, Saux: std_LOGIC_VECTOR(7 downto 0); 
-signal soma, sub, mult: std_LOGIC_VECTOR (7 downto 0);
+signal soma, sub, mult, div: std_LOGIC_VECTOR (7 downto 0);
 BEGIN 
 
-S0: somadorsubtrator port map (A, B, '0',soma);
-S1: somadorsubtrator port map (A, B, '1',sub);
-Multi: MultiplicadorWallace port map (A, B, mult);
-A_auxiliar <= (A(3) & A);
-B_auxiliar <= (B(3) & B);
+Divisao: Divisor port map (CLK ,A,B, div, div_ready);
 
 
 WITH ULAop SELECT
     Saux <= --Logic
-		("000" & not A_auxiliar) when "0000",
-		("000" & not B_auxiliar) when "0001",
-		("000" & A_auxiliar or "000" & B_auxiliar) when "0011",
-		("000" & A_auxiliar nand "000" & B_auxiliar) when "0100",	
-		("000" & A_auxiliar nor "000" & B_auxiliar) when "0101",
-		("000" & A_auxiliar xor "000" & B_auxiliar) when "0110",
-		("000" & A_auxiliar xnor "000" & B_auxiliar) when "0111",
-		(soma) when "1000",
-		(sub) when "1001",
-		(mult) when "1010",
-		(Saux) when others;
+		(Saux) when "00000000",
+		(A + B) when "00000001",
+		(A - B) when "00000010",
+		(A + 1) when "00000011",
+		(A - 1) when "00000100",
+		(not(A)) when "00000101",
+		(A and B) when "00000110",
+		(A or B) when "00000111",
+		(A xor B) when "00001000",
+		(A) when "00001001", --aqui tem que ver o que vamos fazer com a multiplicação, acho que vai ter que arrumar S e Saux dai mas problema pra outra hora.
+		(div) when "00001010",
+		(Saux) when others; 
+		
+HALT <= '1' when ULAop > "1010"; --flag de HALT
+others_ready <= '1' when ULAop /= "00001010";
+READY <= div_ready or others_ready; --a única operação que REALMENTE precisa da flag READY é a divisão, todas as outras operações são resolvidas em 1 ciclo de clock.
+	
 
 S <= Saux(7 downto 0);
 Stest <= Saux(7 downto 0);
 
-sem_operacao <= '1' when ULAop > "1010" else
-					 '0';
-
-
-N <= '1' when Stest < 0 else '0';
 Z <= '1' when Stest = 0 else '0';
 
 
