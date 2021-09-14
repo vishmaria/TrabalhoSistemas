@@ -47,13 +47,13 @@ for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
         res = sub_1
 
     elif (instru == 5):
-        for i in range(4):
+        for i in range(8):
             if lista[i] == 1:
                 lista[i] = "um"
             elif lista[i] == 0:
                 lista[i] = "zero"
         if (0 == 0):
-            for i in range(4):
+            for i in range(8):
                 if lista[i] == "um":
                     lista[i] = 0
                 elif lista[i] == "zero":
@@ -62,37 +62,37 @@ for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
         res = bin2int(pre_res)
     
     elif (instru == 6):
-        lista_result = [1, 1, 1, 1]
-        for i in range (4):
-            if (lista[i] == 1 and listb[i] == 1):
-                lista_result[i] = 1
+        lista_result = ['0', '0', '0', '0', '0', '0', '0', '0']
+        for i in range (8):
+            if (lista[i] == '1' and listb[i] == '1'):
+                lista_result[i] = '1'
             else:
-                lista_result[i] = 0
-        pre_res = ''.join(lista)
+                lista_result[i] = '0'
+        pre_res = ''.join(lista_result)
         res = bin2int(pre_res)
 
     elif (instru == 7):
-        lista_result = [0, 0, 0, 0]
-        for i in range (4):
-            if (lista[i] == 0 and listb[i] == 0):
-                lista_result[i] = 0
+        lista_result = ['0', '0', '0', '0', '0', '0', '0', '0']
+        for i in range (8):
+            if (lista[i] == '0' and listb[i] == '0'):
+                lista_result[i] = '0'
             else:
-                lista_result[i] = 1
-        pre_res = ''.join(lista)
+                lista_result[i] = '1'
+        pre_res = ''.join(lista_result)
         res = bin2int(pre_res)
         
     elif (instru == -8):
-        lista_result = [0, 0, 0, 0]
-        for i in range (4):
-            if ((lista[i] == 0 and listb[i] == 0) or (lista[i] == 1 and listb[i] == 1)):
-                lista_result[i] = 0
+        lista_result = ['0', '0', '0', '0', '0', '0', '0', '0']
+        for i in range (8):
+            if (lista[i] == listb[i]):
+                lista_result[i] = '0'
             else:
-                lista_result[i] = 1
-        pre_res = ''.join(lista)
+                lista_result[i] = '1'
+        pre_res = ''.join(lista_result)
         res = bin2int(pre_res)
 
     elif (instru == -7):
-        res = a * b
+        res = a*b
 
     elif (instru == -6):
         if (b != 0 and a != 0):
@@ -105,7 +105,10 @@ for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
 
 
     bin_instru = int2bin(instru, BITS_INTRUCAO)
-    bin_res = int2bin(res, BITS_SAIDA)
+    if (instru == -7):
+        bin_res = int2bin(res, BITS_SAIDA)
+    else:
+        bin_res = int2bin(res, 10)
 
     if (instru in [1, 2, 3, 4, 5, 6, 7, 8, -8, -7, -6]):
         print(bin_res, file = output_f)
