@@ -20,8 +20,8 @@ BITS_SAIDA = 16
 input_f = open("entradas.txt","w")
 output_f = open("saidas_soma.txt","w")
 testes_instru = range(-8,8)
-testes_a = range(-8, 8)
-testes_b = range(-8, 8)
+testes_a = range(-128, 127)
+testes_b = range(-128, 127)
 
 for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
     sub_1 = (a - 1)
