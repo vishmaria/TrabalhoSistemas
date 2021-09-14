@@ -9,15 +9,15 @@ end WallaceTree_tb;
 
 architecture tb of WallaceTree_tb is
     constant clk_period: time := 100 ns;
-    signal clk, rst, N, Z : std_logic;
-    signal A, B, C: std_logic_vector(3 downto 0);
+    signal clk, rst : std_logic;
+    signal A, B: std_logic_vector(3 downto 0);
     signal S: std_logic_vector(7 downto 0);
 begin
     -- conectando os sinais do test bench aos sinais do contador
-    UUT : entity work.datapath port map 
-                (clk => clk, operacao => C, N => N, 
-					 Z => Z, A => A, B => B, SAIDA => S);
-
+    UUT : entity work.WallaceTree port map 
+                (clock => clk, R => rst,
+                M => A, Q => B, Saida => S);
+					 
     rst <= '0', '1' after clk_period/20;
      
 	 -- processo gerador de clock
@@ -31,17 +31,17 @@ begin
 
     -- processo de leitura das entradas e escrita saidas
     file_io: process
-      variable read_col_from_input_buf : line; -- buffers de entrada e saida
+        variable read_col_from_input_buf : line; -- buffers de entrada e saida
 		file input_buf : text;  -- text is keyword
-      variable write_col_to_output_buf : line; 
+        variable write_col_to_output_buf : line; 
 		file output_buf : text;  -- text is keyword
 
         variable val_A, val_B: std_logic_vector(3 downto 0); -- entradas A e B do arquivo
         variable val_SPACE : character;  -- para espacos
     
         begin
-            file_open(input_buf, "entradas.txt",  read_mode); 
-            file_open(output_buf, "saidas_tb.txt",  write_mode); 
+            file_open(input_buf, "C:\Users\rober\OneDrive\Desktop\SD\TrabalhoSistemas\entradas.txt",  read_mode); 
+            file_open(output_buf, "C:\Users\rober\OneDrive\Desktop\SD\TrabalhoSistemas\saidas_tb.txt",  write_mode); 
 
 			wait until rst = '0'; -- espera reset desligar
 				

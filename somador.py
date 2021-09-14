@@ -10,9 +10,12 @@ def int2bin(a, length):
     b = BitArray(int=a, length = length) # lenght eh o tamanho da string binaria
     return b.bin
 
+def split(word):
+	return [char for char in word]
+
 BITS_INTRUCAO = 4
-BITS_ENTRADA = 4
-BITS_SAIDA = 8
+BITS_ENTRADA = 8
+BITS_SAIDA = 16
 
 input_f = open("entradas.txt","w")
 output_f = open("saidas_soma.txt","w")
@@ -27,8 +30,9 @@ for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
     bin_a = int2bin(a, BITS_ENTRADA)
     bin_b = int2bin(b, BITS_ENTRADA)
 
-    lista = bin_a.split()
-    listb = bin_b.split()
+    lista = split(bin_a)
+    listb = split(bin_b)
+    
     separator = ''
     if (instru == 1):
         res = a + b #minha saida de referencia
@@ -48,13 +52,14 @@ for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
                 lista[i] = "um"
             elif lista[i] == 0:
                 lista[i] = "zero"
-        if (0 not in lista and 1 not in lista):
+        if (0 == 0):
             for i in range(4):
                 if lista[i] == "um":
                     lista[i] = 0
                 elif lista[i] == "zero":
                     lista[i] = 1
-        res = bin2int(separator.join(map(bin, lista)))
+        pre_res = ''.join(lista)
+        res = bin2int(pre_res)
     
     elif (instru == 6):
         lista_result = [1, 1, 1, 1]
@@ -63,7 +68,8 @@ for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
                 lista_result[i] = 1
             else:
                 lista_result[i] = 0
-        res = bin2int(separator.join(map(bin, lista_result)))
+        pre_res = ''.join(lista)
+        res = bin2int(pre_res)
 
     elif (instru == 7):
         lista_result = [0, 0, 0, 0]
@@ -72,7 +78,8 @@ for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
                 lista_result[i] = 0
             else:
                 lista_result[i] = 1
-        res = bin2int(separator.join(map(bin, lista_result)))
+        pre_res = ''.join(lista)
+        res = bin2int(pre_res)
         
     elif (instru == -8):
         lista_result = [0, 0, 0, 0]
@@ -81,7 +88,8 @@ for instru,a,b in itertools.product(testes_instru, testes_a, testes_b):
                 lista_result[i] = 0
             else:
                 lista_result[i] = 1
-        res = bin2int(separator.join(map(bin, lista_result)))
+        pre_res = ''.join(lista)
+        res = bin2int(pre_res)
 
     elif (instru == -7):
         res = a * b
