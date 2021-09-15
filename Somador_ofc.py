@@ -110,10 +110,10 @@ for instru in itertools.product(testes_instru):
         print(bin_res, file = output_f)
     elif (instru[0] == 0):
         print("Sem operacao", file = output_f)
-        print(f'{bin_instru}---', file = input_f)
+        print(f'{bin_instru} 00000000 00000000', file = input_f) ##Zero pois na opção de Sem operação não é realizado calculo
     else:
         print("halt", file = output_f)
-        print(f'{bin_instru}---', file = input_f)
+        print(f'{bin_instru} 00000000 00000000', file = input_f) ##Zeros usados pois operação é considerada halt
         
 input_f.close()
 output_f.close()
