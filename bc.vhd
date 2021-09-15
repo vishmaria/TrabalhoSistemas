@@ -5,7 +5,9 @@ ENTITY bc IS
 PORT (halt: IN STD_LOGIC;
     reset: IN STD_LOGIC;
     CLK: IN STD_LOGIC;
-    en_pc, en_A, en_b, en_ulaop, ready; en_saida: OUT STD_LOGIC);
+    en_pc, en_A, en_b, ena_operacoes: OUT STD_LOGIC;
+	 ready: in STD_LOGIC;
+	 ena_saida: OUT STD_LOGIC);
 END bc;
 
 ARCHITECTURE fsm OF bc IS
@@ -34,7 +36,7 @@ BEGIN
 			IF (halt = '1') THEN
 				next_state <= S5;
 			ELSE 
-            next_state <= S2;
+            next_state <= S1;
 			END IF;
           
         WHEN S1 =>
