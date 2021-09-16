@@ -41,9 +41,9 @@ architecture Rom_Arch of ROM is
         26 => "01100111", --Valor B
         27 => "00001001", --multiplicacao       
         28 => "00000101", --valor A
-        39 => "00000010", --valor B
+        29 => "00000010", --valor B
         30 => "00001010", --divisao
-        31 => "00001010", --valor A
+        31 => "00001000", --valor A
         32 => "00000010", --valor B
         33 => "00001111");-- halt
 begin

@@ -39,20 +39,20 @@ architecture arch of bo is
 	  CLK: in std_logic;
 	  CLR: in std_logic;
 	  EN : in std_logic;
-	  S: out std_logic_vector(4 downto 0)
+	  S: out std_logic_vector(5 downto 0)
 	  );
 	end component;
 	
 	
 	component ROM is
-	port ( address : in std_logic_vector(4 downto 0);
+	port ( address : in std_logic_vector(5 downto 0);
          data : out std_logic_vector(7 downto 0) );
 	end component;
 
 	
 	
 	signal A_carregado, B_carregado, ULA_carregada, saida_rom: std_logic_vector(7 downto 0);
-	signal PC_carregado: std_logic_vector(4 downto 0);
+	signal PC_carregado: std_logic_vector(5 downto 0);
 	signal saida_pro_reg: std_logic_vector(15 downto 0);
 
 	
