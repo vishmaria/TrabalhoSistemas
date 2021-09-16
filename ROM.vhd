@@ -10,7 +10,7 @@ entity ROM is
 end entity;
 
 architecture Rom_Arch of ROM is
-  type memory is array (00 to 34) of std_logic_vector(7 downto 0);
+  type memory is array (00 to 33) of std_logic_vector(7 downto 0);
     constant my_Rom : memory := (
         00 => "00000000", --No operation
         01 => "00000000", --valor A
@@ -38,14 +38,14 @@ architecture Rom_Arch of ROM is
         23 => "01001100", --valor B
         24 => "00001000", --(A xor B)
         25 => "11111100", --valor A
-        27 => "01100111", --Valor B
-        28 => "00001001", --multiplicacao       
-        29 => "00000101", --valor A
-        30 => "00000010", --valor B
-        31 => "00001010", --divisao
-        32 => "00001010", --valor A
-        33 => "00000010", --valor B
-        34 => "00001111");-- halt
+        26 => "01100111", --Valor B
+        27 => "00001001", --multiplicacao       
+        28 => "00000101", --valor A
+        39 => "00000010", --valor B
+        30 => "00001010", --divisao
+        31 => "00001010", --valor A
+        32 => "00000010", --valor B
+        33 => "00001111");-- halt
 begin
    process (address)
    begin
@@ -82,9 +82,8 @@ begin
         when "011101" => data <= my_rom(29);
         when "011110" => data <= my_rom(30);
         when "011111" => data <= my_rom(31);            
-        when "100000" => data <= my_rom(32);        
-        when "100001" => data <= my_rom(33);                
-        when others => data <= my_rom(34);
+        when "100000" => data <= my_rom(32);                        
+        when others => data <= my_rom(33);
        end case;
   end process;
 end architecture Rom_Arch;
