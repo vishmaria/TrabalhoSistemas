@@ -29,23 +29,24 @@ valor_a = int2bin(A[4], BITS_ENTRADA)
 lista = split(valor_a)
 valor_b = int2bin(B[2], BITS_ENTRADA)
 listb = split(valor_b)
+zeros = '0000'
 for instru in itertools.product(testes_instru):
     bin_instru = int2bin(int(instru[0]), BITS_INSTRUCAO)
     if (instru[0] == 1):
         res = A[0] + B[0] #minha saida de referencia
-        print(f'{bin_instru} {int2bin(A[0], BITS_ENTRADA)} {int2bin(B[0], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[0], BITS_ENTRADA)} {int2bin(B[0], BITS_ENTRADA)}', file = input_f)
 
     elif (instru[0] == 2):
         res = A[1] - B[1]
-        print(f'{bin_instru} {int2bin(A[1], BITS_ENTRADA)} {int2bin(B[1], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros +bin_instru} {int2bin(A[1], BITS_ENTRADA)} {int2bin(B[1], BITS_ENTRADA)}', file = input_f)
 
     elif (instru[0] == 3):
         res = A[2] + 1
-        print(f'{bin_instru} {int2bin(A[2], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[2], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
 
     elif (instru[0] == 4):
         res = A[3] - 1
-        print(f'{bin_instru} {int2bin(A[3], BITS_ENTRADA)} {int2bin(B[3], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[3], BITS_ENTRADA)} {int2bin(B[3], BITS_ENTRADA)}', file = input_f)
 
     elif (instru[0] == 5):
         listx = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
@@ -56,11 +57,11 @@ for instru in itertools.product(testes_instru):
                 listx[i] = '1'
         pre_res = ''.join(listx)
         res = bin2int(pre_res)
-        print(f'{bin_instru} {int2bin(A[4], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[4], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
     
     elif (instru[0] == 6):
         lista_result = ['0', '0', '0', '0', '0', '0', '0', '0']
-        print(f'{bin_instru} {int2bin(A[4], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[4], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
         for i in range (8):
             if (lista[i] == '1' and listb[i] == '1'):
                 lista_result[i] = '1'
@@ -71,7 +72,7 @@ for instru in itertools.product(testes_instru):
 
     elif (instru[0] == 7):
         lista_result = ['0', '0', '0', '0', '0', '0', '0', '0']
-        print(f'{bin_instru} {int2bin(A[4], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[4], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
         for i in range (8):
             if (lista[i] == '0' and listb[i] == '0'):
                 lista_result[i] = '0'
@@ -82,7 +83,7 @@ for instru in itertools.product(testes_instru):
         
     elif (instru[0] == -8):
         lista_result = ['0', '0', '0', '0', '0', '0', '0', '0']
-        print(f'{bin_instru} {int2bin(A[4], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[4], BITS_ENTRADA)} {int2bin(B[2], BITS_ENTRADA)}', file = input_f)
         for i in range (8):
             if (lista[i] == listb[i]):
                 lista_result[i] = '0'
@@ -93,10 +94,10 @@ for instru in itertools.product(testes_instru):
 
     elif (instru[0] == -7):
         res = A[6]*B[3]
-        print(f'{bin_instru} {int2bin(A[6], BITS_ENTRADA)} {int2bin(B[3], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[6], BITS_ENTRADA)} {int2bin(B[3], BITS_ENTRADA)}', file = input_f)
 
     elif (instru[0] == -6):
-        print(f'{bin_instru} {int2bin(A[-1], BITS_ENTRADA)} {int2bin(B[-1], BITS_ENTRADA)}', file = input_f)
+        print(f'{zeros + bin_instru} {int2bin(A[-1], BITS_ENTRADA)} {int2bin(B[-1], BITS_ENTRADA)}', file = input_f)
         if (B[-1] != 0 and A[-1] != 0):
             res = round(A[-1] / B[-1])
             
@@ -110,10 +111,10 @@ for instru in itertools.product(testes_instru):
         print(bin_res, file = output_f)
     elif (instru[0] == 0):
         print("Sem operacao", file = output_f)
-        print(f'{bin_instru} 00000000 00000000', file = input_f) ##Zero pois na opção de Sem operação não é realizado calculo
+        print(f'{zeros + bin_instru} 00000000 00000000', file = input_f) ##Zero pois na opção de Sem operação não é realizado calculo
     else:
         print("halt", file = output_f)
-        print(f'{bin_instru} 00000000 00000000', file = input_f) ##Zeros usados pois operação é considerada halt
+        print(f'{zeros + bin_instru} 00000000 00000000', file = input_f) ##Zeros usados pois operação é considerada halt
         
 input_f.close()
 output_f.close()

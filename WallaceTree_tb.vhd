@@ -4,19 +4,19 @@ use ieee.numeric_std.all;
 use std.textio.all;
 use ieee.std_logic_textio.all;  -- para tratamento de arquivos e texto
 
-entity WallaceTree_tb is
-end WallaceTree_tb;
+entity ula_tb is
+end ula_tb;
 
-architecture tb of WallaceTree_tb is
+architecture tb of ula_tb is
     constant clk_period: time := 100 ns;
-    signal clk, rst : std_logic;
-    signal A, B: std_logic_vector(3 downto 0);
-    signal S: std_logic_vector(7 downto 0);
+    signal clk, Z, HALT, READY : std_logic;
+    signal A, B, ULAop: std_logic_vector(7 downto 0);
+    signal S: std_logic_vector(15 downto 0);
 begin
     -- conectando os sinais do test bench aos sinais do contador
-    UUT : entity work.WallaceTree port map 
-                (clock => clk, R => rst,
-                M => A, Q => B, Saida => S);
+    UUT : entity work.ula port map 
+                (CLK => clk, A => A, B => B, 
+                S => S, Z => Z, HALT => HALT, READY => READY);
 					 
     rst <= '0', '1' after clk_period/20;
      
@@ -36,7 +36,7 @@ begin
         variable write_col_to_output_buf : line; 
 		file output_buf : text;  -- text is keyword
 
-        variable val_A, val_B: std_logic_vector(3 downto 0); -- entradas A e B do arquivo
+        variable val_A, val_B, val_op: std_logic_vector(7 downto 0); -- entradas A e B do arquivo
         variable val_SPACE : character;  -- para espacos
     
         begin
@@ -47,11 +47,14 @@ begin
 				
             while not endfile(input_buf) loop
                 readline(input_buf, read_col_from_input_buf);
+                read(read_col_from_input_buf, val_op);
+                read(read_col_from_input_buf, val_SPACE);           -- read in the space character
                 read(read_col_from_input_buf, val_A);
                 read(read_col_from_input_buf, val_SPACE);           -- read in the space character
                 read(read_col_from_input_buf, val_B);
 
                 -- Pass the read values to signals
+                ULAop <= val_op;
                 A <= val_A;
                 B <= val_B;
 
