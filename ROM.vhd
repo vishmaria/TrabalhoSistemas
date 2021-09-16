@@ -10,7 +10,7 @@ entity ROM is
 end entity;
 
 architecture Rom_Arch of ROM is
-  type memory is array (00 to 31) of std_logic_vector(7 downto 0);
+  type memory is array (00 to 34) of std_logic_vector(31 downto 0);
     constant my_Rom : memory := (
         00 => "00000000", --No operation
         01 => "00000000", --valor A
@@ -20,30 +20,32 @@ architecture Rom_Arch of ROM is
         05 => "00001001", --valor B
         06 => "00000010", --subtração
         07 => "00001010", -- valor A
-        08 => "00000001", -- valor B
+        08 => "0000001", -- valor B
         09 => "00000011", -- A++
         10 => "00000111", --valor A
-        11 => "00000100", -- A--
-        12 => "10000000", -- valor A
-        13 => "00000101", --not(A)
-        14 => "00111100", --valor A
-        15 => "00000000", --valor B
-        16 => "00000110", --(A and B)
-        17 => "00010000", --valor A
-        18 => "01000010", --valor B
-        19 => "00000111", --(A or B)
-        20 => "11000011", --valor A
-        21 => "01001100", --valor B
-        22 => "00001000", --(A xor B)
-        23 => "11111100", --valor A
-        24 => "01100111", --Valor B
-        25 => "00001001", --multiplicacao       
-        26 => "00000101", --valor A
-        27 => "00000010", --valor B
-        28 => "00001010", --divisao
-        29 => "00001010", --valor A
+        11 => "00000000", --valor B
+        12 => "00000100", -- A--
+        13 => "10000000", -- valor A
+        14 => "00000000", --valor B
+        15 => "00000101", --not(A)
+        16 => "00111100", --valor A
+        17 => "00000000", --valor B
+        18 => "00000110", --(A and B)
+        19 => "00010000", --valor A
+        20 => "01000010", --valor B
+        21 => "00000111", --(A or B)
+        22 => "11000011", --valor A
+        23 => "01001100", --valor B
+        24 => "00001000", --(A xor B)
+        25 => "11111100", --valor A
+        27 => "01100111", --Valor B
+        28 => "00001001", --multiplicacao       
+        29 => "00000101", --valor A
         30 => "00000010", --valor B
-        31 => "00001111");-- halt
+        31 => "00001010", --divisao
+        32 => "00001010", --valor A
+        33 => "00000010", --valor B
+        34 => "00001111");-- halt
 begin
    process (address)
    begin
@@ -58,12 +60,12 @@ begin
         when "00111" => data <= my_rom(07);
         when "01000" => data <= my_rom(08);
         when "01001" => data <= my_rom(09);
-		when "01010" => data <= my_rom(10);
-		when "01011" => data <= my_rom(11);
-	    when "01100" => data <= my_rom(12);
-		when "01101" => data <= my_rom(13);
-		when "01110" => data <= my_rom(14);
-		when "01111" => data <= my_rom(15);
+		    when "01010" => data <= my_rom(10);
+		    when "01011" => data <= my_rom(11);
+	      when "01100" => data <= my_rom(12);
+		    when "01101" => data <= my_rom(13);
+		    when "01110" => data <= my_rom(14);
+		    when "01111" => data <= my_rom(15);
         when "10000" => data <= my_rom(16);
         when "10001" => data <= my_rom(17);
         when "10010" => data <= my_rom(18);
