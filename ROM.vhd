@@ -20,7 +20,7 @@ architecture Rom_Arch of ROM is
         05 => "00001001", --valor B
         06 => "00000010", --subtração
         07 => "00001010", -- valor A
-        08 => "0000001", -- valor B
+        08 => "00000101", -- valor B
         09 => "00000011", -- A++
         10 => "00000111", --valor A
         11 => "00000000", --valor B
