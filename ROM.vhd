@@ -5,12 +5,12 @@ library ieee;
 use ieee.std_logic_1164.all;
 ------------------------------------
 entity ROM is
-  port ( address : in std_logic_vector(4 downto 0);
+  port ( address : in std_logic_vector(5 downto 0);
          data : out std_logic_vector(7 downto 0) );
 end entity;
 
 architecture Rom_Arch of ROM is
-  type memory is array (00 to 34) of std_logic_vector(31 downto 0);
+  type memory is array (00 to 34) of std_logic_vector(7 downto 0);
     constant my_Rom : memory := (
         00 => "00000000", --No operation
         01 => "00000000", --valor A
@@ -50,38 +50,41 @@ begin
    process (address)
    begin
      case address is
-        when "00000" => data <= my_rom(00);
-        when "00001" => data <= my_rom(01);
-        when "00010" => data <= my_rom(02);
-        when "00011" => data <= my_rom(03);
-        when "00100" => data <= my_rom(04);
-        when "00101" => data <= my_rom(05);
-        when "00110" => data <= my_rom(06);
-        when "00111" => data <= my_rom(07);
-        when "01000" => data <= my_rom(08);
-        when "01001" => data <= my_rom(09);
-		    when "01010" => data <= my_rom(10);
-		    when "01011" => data <= my_rom(11);
-	      when "01100" => data <= my_rom(12);
-		    when "01101" => data <= my_rom(13);
-		    when "01110" => data <= my_rom(14);
-		    when "01111" => data <= my_rom(15);
-        when "10000" => data <= my_rom(16);
-        when "10001" => data <= my_rom(17);
-        when "10010" => data <= my_rom(18);
-        when "10011" => data <= my_rom(19);
-        when "10100" => data <= my_rom(20);
-        when "10101" => data <= my_rom(21);
-        when "10110" => data <= my_rom(22);
-        when "10111" => data <= my_rom(23);
-        when "11000" => data <= my_rom(24);
-        when "11001" => data <= my_rom(25);
-        when "11010" => data <= my_rom(26);
-        when "11011" => data <= my_rom(27);
-        when "11100" => data <= my_rom(28);
-        when "11101" => data <= my_rom(29);
-        when "11110" => data <= my_rom(30);
-        when others => data <= my_rom(31);
+        when "000000" => data <= my_rom(00);
+        when "000001" => data <= my_rom(01);
+        when "000010" => data <= my_rom(02);
+        when "000011" => data <= my_rom(03);
+        when "000100" => data <= my_rom(04);
+        when "000101" => data <= my_rom(05);
+        when "000110" => data <= my_rom(06);
+        when "000111" => data <= my_rom(07);
+        when "001000" => data <= my_rom(08);
+        when "001001" => data <= my_rom(09);
+		    when "001010" => data <= my_rom(10);
+		    when "001011" => data <= my_rom(11);
+	      when "001100" => data <= my_rom(12);
+		    when "001101" => data <= my_rom(13);
+		    when "001110" => data <= my_rom(14);
+		    when "001111" => data <= my_rom(15);
+        when "010000" => data <= my_rom(16);
+        when "010001" => data <= my_rom(17);
+        when "010010" => data <= my_rom(18);
+        when "010011" => data <= my_rom(19);
+        when "010100" => data <= my_rom(20);
+        when "010101" => data <= my_rom(21);
+        when "010110" => data <= my_rom(22);
+        when "010111" => data <= my_rom(23);
+        when "011000" => data <= my_rom(24);
+        when "011001" => data <= my_rom(25);
+        when "011010" => data <= my_rom(26);
+        when "011011" => data <= my_rom(27);
+        when "011100" => data <= my_rom(28);
+        when "011101" => data <= my_rom(29);
+        when "011110" => data <= my_rom(30);
+        when "011111" => data <= my_rom(31);            
+        when "100000" => data <= my_rom(32);        
+        when "100001" => data <= my_rom(33);                
+        when others => data <= my_rom(34);
        end case;
   end process;
 end architecture Rom_Arch;
